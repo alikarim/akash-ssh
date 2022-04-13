@@ -1,4 +1,4 @@
-# SSH into a Docker container
+# Akash SSH Boilerplate
 
 
 ## Prerequisite
