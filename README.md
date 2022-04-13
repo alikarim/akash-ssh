@@ -23,6 +23,7 @@ SUBNET=<custom subnet for docker network e.g. 172.30.0.0/16>
 	ssh-keygen -t rsa -b 4096 -C '' -f ./ssh/id_rsa -q -N ''
 	chmod 400 ./ssh/id_rsa
 
+<em> Replace value of SSH_PUBLIC_KEY variable in SDL file (deploy.yaml) with the content of id_rsa.pub file. </em>
 ### Build
 	docker-compose build --no-cache 
 
