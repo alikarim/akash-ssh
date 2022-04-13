@@ -41,9 +41,11 @@ SUBNET=<custom subnet for docker network e.g. 172.30.0.0/16>
 
 ### SSH into a bastion host
     eval `ssh-agent -s`
-	ssh-add ./ssh/id_rsa
-	ssh -A <ssh user>@<provider> -p <provider generated port>
+    ssh-add ./ssh/id_rsa
+    ssh -A <ssh user>@<provider> -p <provider generated port>
 
-
+### SSH into an application node from the bastion host
+    ssh root@<container name> -p <SSH_PORT>
+    ssh root@app -p 2022
 
 <em>Alternatively you can use `make` command (see Makefile)</em>
