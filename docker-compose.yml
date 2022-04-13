@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  app:
+    build: 
+      context: './app'
+      args:
+        SSH_PORT: ${SSH_PORT}
+        # SSH_ALLOWED_HOSTS: ${SSH_ALLOWED_HOSTS}
+    image: "${ACCOUNT}/${APP_REPOSITORY}:${APP_TAG}"
+    ports:
+      - "2200:${SSH_PORT}"
+    environment:
+      - SSH_PUBLIC_KEY
+    container_name: akash
+    networks:
+      - akash-network
+
+  bastion:
+    build:
+      context: './bastion'
+      args:
+        SSH_PORT: ${SSH_PORT}
+        SSH_USER: ${SSH_USER}
+        
+    image: "${ACCOUNT}/${BASTION_HOST_REPOSITORY}:${BASTION_HOST_TAG}"
+    ports:
+      - "2201:${SSH_PORT}"
+    environment:
+      - SSH_USER
+      - SSH_PUBLIC_KEY
+    container_name: bastion
+    networks:
+      - akash-network
+
+networks:
+  akash-network:
+    name: akash_network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${SUBNET}

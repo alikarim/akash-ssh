@@ -1,0 +1,14 @@
+#!/command/execlineb -P
+
+with-contenv
+
+importas ssh_public_key SSH_PUBLIC_KEY
+
+foreground { mkdir -p -m 750 /var/run/sshd }
+foreground { mkdir -p -m 700 /root/.ssh }
+foreground { redirfd -w 1 /root/.ssh/authorized_keys echo "${ssh_public_key}" }
+foreground { chmod 400 /root/.ssh/authorized_keys }
+
+foreground { ssh-keygen -A }
+
+

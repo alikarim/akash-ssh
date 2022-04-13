@@ -1,0 +1,68 @@
+---
+version: "2.0"
+
+services:
+  app:
+    image: alikarim/akash:v2.0
+    env:
+      - SSH_PUBLIC_KEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSCX/ME8u3y8l/Ct6LtvEZ5xvKU7gOBKkzBAuDVZOQ1cOljpg5pbzCSBVG8fzDHMJiQy3+sJtt8gXY/XQM5DlIZw2sZeLZkcQSZjDQd8J0gHeuLe8u9LAODWepgE/tGkIFamvlBexigiVL0C/eHp9FpbBo+sPa02hFECo2xnfUhVQbS3Kii+deSt7CVWf8u+jkbk1zonootywdJEBcTV25tl0SFxuR0FEoVs/4Vti2i8gXO+6Pt8vSmX2Iwfya49r6kTuqfCWTw4W0hiqP4zROdbAugiI1mZGrtkcodwX5oFN/xZ+2XQjto/RuKLlfovLPT0KoZ4Nfm8lwZ7gX2DfXnguGnWDbLxiri+9d0Ol7qpg2Bata2rQLJRVEYHZFKp2ecMeUd+O4E/7HkG+8Yr5mWC6CD4uns/amWGUhXsHa2cmbZel1xIw/D8g4CFSQ37v67pY5gsj3/58AOybAlcuezIrSDQ9uk+3Np0wq6l2elC+ED8DjvApdgKlGeHGZ3lGQVX+mkQmDdLrKY9C24SX4/59AKBnX4Ro2ZQ5hs6XqGc/OClyczuAZWOJbf8Qxs3S5xhAynbdFlf23Lw9Jb1yXIIVmJPPdgmU2wIRoUzmLoVIR8oYHz+fwKXp6oOZrXztuCQonuTn8QWub3ks8MjG4x9/YmPx5e48rbTn5QaTYiw==
+    expose:
+      - port: 80
+        to:
+          - global: true
+      - port: 2022
+        as: 2022
+        to:
+          - bastion
+  bastion:
+    image: alikarim/akash-bastion:v2.0
+    env:
+      - SSH_USER=akuser
+      - SSH_PUBLIC_KEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSCX/ME8u3y8l/Ct6LtvEZ5xvKU7gOBKkzBAuDVZOQ1cOljpg5pbzCSBVG8fzDHMJiQy3+sJtt8gXY/XQM5DlIZw2sZeLZkcQSZjDQd8J0gHeuLe8u9LAODWepgE/tGkIFamvlBexigiVL0C/eHp9FpbBo+sPa02hFECo2xnfUhVQbS3Kii+deSt7CVWf8u+jkbk1zonootywdJEBcTV25tl0SFxuR0FEoVs/4Vti2i8gXO+6Pt8vSmX2Iwfya49r6kTuqfCWTw4W0hiqP4zROdbAugiI1mZGrtkcodwX5oFN/xZ+2XQjto/RuKLlfovLPT0KoZ4Nfm8lwZ7gX2DfXnguGnWDbLxiri+9d0Ol7qpg2Bata2rQLJRVEYHZFKp2ecMeUd+O4E/7HkG+8Yr5mWC6CD4uns/amWGUhXsHa2cmbZel1xIw/D8g4CFSQ37v67pY5gsj3/58AOybAlcuezIrSDQ9uk+3Np0wq6l2elC+ED8DjvApdgKlGeHGZ3lGQVX+mkQmDdLrKY9C24SX4/59AKBnX4Ro2ZQ5hs6XqGc/OClyczuAZWOJbf8Qxs3S5xhAynbdFlf23Lw9Jb1yXIIVmJPPdgmU2wIRoUzmLoVIR8oYHz+fwKXp6oOZrXztuCQonuTn8QWub3ks8MjG4x9/YmPx5e48rbTn5QaTYiw==
+    expose:
+      - port: 2022
+        as: 2022
+        to:
+          - global: true
+profiles:
+  compute:
+    app:
+      resources:
+        cpu:
+          units: 1.0
+        memory:
+          size: 1Gi
+        storage:
+          size: 1Gi
+    bastion:
+      resources:
+        cpu: 
+          units: 1.0
+        memory:
+          size: 512Mi
+        storage:
+          size: 128Mi
+  placement:
+    akash:
+      attributes:
+        host: akash
+      signedBy:
+        anyOf:
+          - "akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63"
+      pricing:
+        app: 
+          denom: uakt
+          amount: 100
+        bastion: 
+          denom: uakt
+          amount: 100
+
+deployment:
+  app:
+    akash:
+      profile: app
+      count: 1
+  bastion:
+    akash:
+      profile: bastion
+      count: 1

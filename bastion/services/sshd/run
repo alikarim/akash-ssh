@@ -1,0 +1,8 @@
+#!/command/execlineb -P
+
+with-contenv
+importas user SSH_USER
+
+s6-setuidgid ${user}
+fdmove -c 2 1
+if { /usr/sbin/sshd -t -f /opt/ssh/sshd_config } /usr/sbin/sshd -D -e -f /opt/ssh/sshd_config
