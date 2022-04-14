@@ -6,7 +6,7 @@ usage=make <target>
 ifeq ($(UNAME_S),Darwin)
 	sedopt := -i
 else
-    sedopt := -i ''
+	sedopt := -i ''
 endif
 
 
