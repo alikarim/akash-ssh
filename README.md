@@ -16,7 +16,7 @@ SSH_PUBLIC_KEY=<ssh public key>
 SUBNET=<custom subnet for docker network e.g. 172.30.0.0/16>
 ```
 
-## Commands. <em>Alternatively you can use `make` command (see Makefile)</em>
+## Commands. Alternatively, you can use the make command (see Makefile).
 
 ### Generate ssh key
     mkdir -p ssh
