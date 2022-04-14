@@ -3,22 +3,22 @@ version: "2.0"
 
 services:
   app:
-    image: alikarim/akash:v2.0
+    image: {{APP_IMAGE}}
     env:
-      - SSH_PUBLIC_KEY=<content of the ssh public key>
+      - SSH_PUBLIC_KEY={{SSH_PUBLIC_KEY}}
     expose:
       - port: 80
         to:
           - global: true
-      - port: 2022
-        as: 2022
+      - port: {{SSH_PORT}}
+        as: {{SSH_PORT}}
         to:
           - bastion
   bastion:
-    image: alikarim/akash-bastion:v2.0
+    image: {{BASTION_IMAGE}}
     env:
-      - SSH_USER=akuser
-      - SSH_PUBLIC_KEY=<content of the ssh public key>
+      - SSH_USER={{SSH_USER}}
+      - SSH_PUBLIC_KEY={{SSH_PUBLIC_KEY}}
     expose:
       - port: 2022
         as: 2022
