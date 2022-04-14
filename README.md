@@ -51,7 +51,7 @@ SUBNET=<custom subnet for docker network e.g. 172.30.0.0/16>
     
 ## Example
 
-### The following commands will create SSH keys, build docker image, push it to docker repository and generate the SDL file.
+### The following commands will create SSH keys, build docker images, push them to docker repository and generate a new SDL file.
     make ssh-key  // generates ssh keys and updates .env file 
     make build
     make push
