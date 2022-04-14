@@ -16,14 +16,12 @@ SSH_PUBLIC_KEY=<ssh public key>
 SUBNET=<custom subnet for docker network e.g. 172.30.0.0/16>
 ```
 
-## Commands
+## Commands. <em>Alternatively you can use `make` command (see Makefile)</em>
 
 ### Generate ssh key
     mkdir -p ssh
 	ssh-keygen -t rsa -b 4096 -C '' -f ./ssh/id_rsa -q -N ''
 	chmod 400 ./ssh/id_rsa
-
-<em> Replace value of SSH_PUBLIC_KEY variable in SDL file (deploy.yaml) with the content of id_rsa.pub file. </em>
 ### Build
 	docker-compose build --no-cache 
 
@@ -48,4 +46,5 @@ SUBNET=<custom subnet for docker network e.g. 172.30.0.0/16>
     ssh root@<container name> -p <SSH_PORT>
     ssh root@app -p 2022
 
-<em>Alternatively you can use `make` command (see Makefile)</em>
+### Generate SDL file. This command generates a new SDL file in `deploy` folder.
+    make sdl
