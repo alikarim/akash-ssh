@@ -20,8 +20,8 @@ services:
       - SSH_USER={{SSH_USER}}
       - SSH_PUBLIC_KEY={{SSH_PUBLIC_KEY}}
     expose:
-      - port: 2022
-        as: 2022
+      - port: {{SSH_PORT}}
+        as: {{SSH_PORT}}
         to:
           - global: true
 profiles:
