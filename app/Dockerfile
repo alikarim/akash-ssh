@@ -24,11 +24,8 @@ RUN tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
 
 RUN rm  -rf /tmp/* /var/cache/apk/*
 
-COPY services/ /etc/s6-overlay/s6-rc.d/
-RUN chmod ug+x /etc/s6-overlay/s6-rc.d/initialize/up
-RUN chmod ug+x /etc/s6-overlay/s6-rc.d/sshd/{run,}
-RUN touch /etc/s6-overlay/s6-rc.d/user/contents.d/initialize
-RUN touch /etc/s6-overlay/s6-rc.d/user/contents.d/sshd
+COPY s6-rc.d/ /etc/s6-overlay/s6-rc.d/
+RUN find /etc/s6-overlay/s6-rc.d -type f \( -name 'run' -o -name 'up' -o -name 'finish' \) -exec chmod ug+x {} \;
 
 RUN sed -i 's/.*AddressFamily any$/AddressFamily inet/g' /etc/ssh/sshd_config; \
     sed -i 's/.*Port 22$/Port '"$SSH_PORT"'/g' /etc/ssh/sshd_config; \

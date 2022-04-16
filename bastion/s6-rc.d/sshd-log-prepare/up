@@ -1,0 +1,6 @@
+#!/command/execlineb -P
+
+if { mkdir -p /var/log/sshd }
+if { chown nobody:nogroup /var/log/sshd }
+chmod 02755 /var/log/sshd
+

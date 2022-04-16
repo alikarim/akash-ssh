@@ -1,0 +1,3 @@
+#!/command/execlineb -P
+
+logutil-service /var/log/sshd
