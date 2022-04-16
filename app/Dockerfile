@@ -8,8 +8,6 @@ ARG S6_OVERLAY_VERSION=3.1.0.1
 # Prevents interaction while installing or upgrading the system via apt. Accepts the default answer for all questions. 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV PATH="/command:${PATH}"
-
 RUN apt update -y && \
     apt install -y \
         nano \

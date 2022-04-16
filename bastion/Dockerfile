@@ -4,8 +4,6 @@ ARG SSH_USER
 ARG SSH_PORT
 ARG S6_OVERLAY_VERSION=3.1.0.1
 
-ENV PATH="/command:${PATH}"
-
 RUN apk add --update --no-cache bash openssh nano
 
 # Install s6 Overlay
