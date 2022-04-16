@@ -4,6 +4,8 @@ SHELL ["/bin/bash", "-c"]
 
 ARG SSH_PORT
 ARG S6_OVERLAY_VERSION=3.1.0.1
+ARG S6_OVERLAY_NOARCH_SHA=eb72a8db89428eaaf1f5bd2464f536b9fd9107cefbcd5b30c5b46d068de1f506
+ARG S6_OVERLAY_X86_64_SHA=a2655a6635904a88d232070f2d1e3f5acbfa2170b4ba682e471298757299249b
 # ARG SSH_ALLOWED_HOSTS
 # Prevents interaction while installing or upgrading the system via apt. Accepts the default answer for all questions. 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -16,8 +18,11 @@ RUN apt update -y && \
 
 # Install s6 Overlay
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
+RUN echo "${S6_OVERLAY_NOARCH_SHA}  /tmp/s6-overlay-noarch.tar.xz" | sha256sum -c
 RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
+
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
+RUN echo "${S6_OVERLAY_X86_64_SHA}  /tmp/s6-overlay-x86_64.tar.xz" | sha256sum -c
 RUN tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
 
 RUN rm  -rf /tmp/* /var/cache/apk/*
