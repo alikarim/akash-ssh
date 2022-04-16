@@ -4,11 +4,10 @@ with-contenv
 
 importas ssh_public_key SSH_PUBLIC_KEY
 
-foreground { mkdir -p -m 750 /var/run/sshd }
-foreground { mkdir -p -m 700 /root/.ssh }
-foreground { redirfd -w 1 /root/.ssh/authorized_keys echo "${ssh_public_key}" }
-foreground { chmod 400 /root/.ssh/authorized_keys }
-
-foreground { ssh-keygen -A }
+if { mkdir -p -m 750 /var/run/sshd }
+if { mkdir -p -m 700 /root/.ssh }
+if { redirfd -w 1 /root/.ssh/authorized_keys echo "${ssh_public_key}" }
+if { chmod 400 /root/.ssh/authorized_keys }
+ssh-keygen -A 
 
 

@@ -5,17 +5,17 @@ with-contenv
 importas user SSH_USER
 importas ssh_public_key SSH_PUBLIC_KEY
 
-foreground { mkdir -p -m 700 /home/${user}/.ssh }
-foreground { redirfd -w 1 /home/${user}/.ssh/authorized_keys echo "${ssh_public_key}" }
-foreground { chown -R ${user}. /home/${user}/.ssh }
-foreground { chmod 400 /home/${user}/.ssh/authorized_keys }
+if { mkdir -p -m 700 /home/${user}/.ssh }
+if { redirfd -w 1 /home/${user}/.ssh/authorized_keys echo "${ssh_public_key}" }
+if { chown -R ${user}. /home/${user}/.ssh }
+if { chmod 400 /home/${user}/.ssh/authorized_keys }
 
-foreground { ssh-keygen -q -N "" -t dsa -f /opt/ssh/ssh_host_dsa_key }
-foreground { ssh-keygen -q -N "" -t rsa -b 4096 -f /opt/ssh/ssh_host_rsa_key }
-foreground { ssh-keygen -q -N "" -t ecdsa -f /opt/ssh/ssh_host_ecdsa_key }
-foreground { ssh-keygen -q -N "" -t ed25519 -f /opt/ssh/ssh_host_ed25519_key }
+if { ssh-keygen -q -N "" -t dsa -f /opt/ssh/ssh_host_dsa_key }
+if { ssh-keygen -q -N "" -t rsa -b 4096 -f /opt/ssh/ssh_host_rsa_key }
+if { ssh-keygen -q -N "" -t ecdsa -f /opt/ssh/ssh_host_ecdsa_key }
+if { ssh-keygen -q -N "" -t ed25519 -f /opt/ssh/ssh_host_ed25519_key }
 
 elglob ssh_host /opt/ssh/ssh_host*
-foreground { chmod 600 ${ssh_host} }
-foreground { chmod 644 /opt/ssh/sshd_config }
-foreground { chown -R ${user}. /opt/ssh/ }
+if { chmod 600 ${ssh_host} }
+if { chmod 644 /opt/ssh/sshd_config }
+chown -R ${user}. /opt/ssh/

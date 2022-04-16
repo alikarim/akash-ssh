@@ -30,13 +30,11 @@ RUN rm  -rf /tmp/* /var/cache/apk/*
 COPY s6-rc.d/ /etc/s6-overlay/s6-rc.d/
 RUN find /etc/s6-overlay/s6-rc.d -type f \( -name 'run' -o -name 'up' -o -name 'finish' \) -exec chmod ug+x {} \;
 
-RUN sed -i 's/.*AddressFamily any$/AddressFamily inet/g' /etc/ssh/sshd_config; \
-    sed -i 's/.*Port 22$/Port '"$SSH_PORT"'/g' /etc/ssh/sshd_config; \
-    sed -i 's/.*PasswordAuthentication yes$/PasswordAuthentication no/g' /etc/ssh/sshd_config; \
-    sed -i 's/.*UsePAM yes$/UsePAM no/g' /etc/ssh/sshd_config; \
-    sed -i 's/.*ChallengeResponseAuthentication yes$/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
+# Update sshd config
+COPY scripts/sshd_config.sh /tmp/
+RUN  /bin/sh /tmp/sshd_config.sh
 
-# Deny SSH service to all clients except subnet SSH_ALLOWED_HOSTS
+# Deny SSH service to all clients except SSH_ALLOWED_HOSTS
 # RUN echo "sshd: ALL" >> /etc/hosts.deny
 # RUN echo "sshd: ${SSH_ALLOWED_HOSTS}" >> /etc/hosts.allow
 
