@@ -31,10 +31,6 @@ RUN  cp /etc/ssh/sshd_config /opt/ssh/
 COPY scripts/sshd_config.sh /tmp/
 RUN  /bin/sh /tmp/sshd_config.sh
 
-# Deny SSH service to all clients except x.x.x.x
-# RUN echo 'sshd: ALL' >> /etc/hosts.deny
-# RUN echo 'sshd: x.x.x.x' >> /etc/hosts.allow
-
 EXPOSE $SSH_PORT
 
 ENTRYPOINT ["/init"]

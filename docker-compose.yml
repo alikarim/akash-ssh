@@ -7,7 +7,6 @@ services:
       context: './app'
       args:
         SSH_PORT: ${SSH_PORT}
-        # SSH_ALLOWED_HOSTS: ${SSH_ALLOWED_HOSTS}
     image: "${ACCOUNT}/${APP_REPOSITORY}:${APP_TAG}"
     ports:
       - "2200:${SSH_PORT}"

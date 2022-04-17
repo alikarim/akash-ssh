@@ -6,7 +6,7 @@ ARG SSH_PORT
 ARG S6_OVERLAY_VERSION=3.1.0.1
 ARG S6_OVERLAY_NOARCH_SHA=eb72a8db89428eaaf1f5bd2464f536b9fd9107cefbcd5b30c5b46d068de1f506
 ARG S6_OVERLAY_X86_64_SHA=a2655a6635904a88d232070f2d1e3f5acbfa2170b4ba682e471298757299249b
-# ARG SSH_ALLOWED_HOSTS
+
 # Prevents interaction while installing or upgrading the system via apt. Accepts the default answer for all questions. 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -33,10 +33,6 @@ RUN find /etc/s6-overlay/s6-rc.d -type f \( -name 'run' -o -name 'up' -o -name '
 # Update sshd config
 COPY scripts/sshd_config.sh /tmp/
 RUN  /bin/sh /tmp/sshd_config.sh
-
-# Deny SSH service to all clients except SSH_ALLOWED_HOSTS
-# RUN echo "sshd: ALL" >> /etc/hosts.deny
-# RUN echo "sshd: ${SSH_ALLOWED_HOSTS}" >> /etc/hosts.allow
 
 EXPOSE $SSH_PORT
 
