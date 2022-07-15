@@ -6,6 +6,9 @@
 ### Public docker repository
 Akash does not support private docker repositories. You can create a public repository on [Docker Hub](https://hub.docker.com) if you don't already have one.
 
+### 
+You can read about Akash Network at [Akash Guidebook](https://docs.akash.network).
+
 ### Create .env file
 ```
 ACCOUNT=<docker account>
